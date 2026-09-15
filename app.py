@@ -1,3 +1,5 @@
+import os
+import gdown
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
@@ -13,16 +15,25 @@ st.set_page_config(
 st.title("⛑️ Helmet & Safety Gear Detection")
 st.write("Upload an image to detect safety helmets and unprotected heads using **YOLO11**.")
 
+# Download model from Google Drive if not present
+file_id = "1LmHN095UzxVmUi435kQ65tEaRluirxVE"
+url = f"https://drive.google.com/uc?id={file_id}"
+output_path = "best.pt"
+
+if not os.path.exists(output_path):
+    with st.spinner("Downloading model... Please wait..."):
+        gdown.download(url, output_path, quiet=False)
+
 # Load model with caching
 @st.cache_resource
 def load_model():
-    return YOLO("best (4).pt")
+    return YOLO(output_path)
 
 try:
     model = load_model()
     st.sidebar.success("Model loaded successfully!")
 except Exception as e:
-    st.sidebar.error("Error loading model. Make sure 'best.pt' is in the project directory.")
+    st.sidebar.error("Error loading model from Drive.")
 
 # Sidebar controls
 st.sidebar.header("Model Settings")
