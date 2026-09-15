@@ -19,6 +19,8 @@ An end-to-end Computer Vision system that detects safety helmets and unprotected
 
 ## 📁 Repository Structure
 helmet-detection-yolo11/
+```text
+.
 ├── app.py              # Main Streamlit web application
 ├── best.pt             # Trained YOLO11 model weights
 ├── requirements.txt    # Python packages and dependencies
