@@ -22,6 +22,5 @@ helmet-detection-yolo11/
 ```text
 .
 ├── app.py              # Main Streamlit web application
-├── best.pt             # Trained YOLO11 model weights
 ├── requirements.txt    # Python packages and dependencies
 └── README.md           # Project documentation
