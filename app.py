@@ -1,49 +1,68 @@
-
-
-
-
 import streamlit as st
+from ultralytics import YOLO
 from PIL import Image
 import numpy as np
-import cv2
-from ultralytics import YOLO
 
-# ضبط إعدادات الصفحة
-st.set_page_config(page_title="Face Mask Detection", page_icon="😷")
+# Page configuration
+st.set_page_config(
+    page_title="Helmet & Safety Gear Detection",
+    page_icon="⛑️",
+    layout="centered"
+)
 
-st.title("😷 Face Mask Detection System")
-st.write("Upload an image to detect whether people are wearing masks or not.")
+st.title("⛑️ Helmet & Safety Gear Detection")
+st.write("Upload an image to detect safety helmets and unprotected heads using **YOLO11**.")
 
-# تحميل النموذج (قم بتغيير 'best.pt' إلى مسار نموذج YOLO الخاص بك)
+# Load model with caching
 @st.cache_resource
 def load_model():
     return YOLO("best.pt")
 
 try:
     model = load_model()
+    st.sidebar.success("Model loaded successfully!")
 except Exception as e:
-    st.error("لم يتم العثور على ملف النموذج، يرجى التأكد من وجود ملف النموذج (مثل best.pt) في المجلد.")
+    st.sidebar.error("Error loading model. Make sure 'best.pt' is in the project directory.")
 
-# أداة رفع الصور
+# Sidebar controls
+st.sidebar.header("Model Settings")
+conf_threshold = st.sidebar.slider("Confidence Threshold", 0.1, 1.0, 0.25, 0.05)
+
+# File uploader
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # قراءة الصورة بواسطة PIL
     image = Image.open(uploaded_file)
     
-    # عرض الصورة الأصلية باستخدام use_container_width المصححة
-    st.image(image, caption="Uploaded Image", use_container_width=True)
-    
-    if st.button("Detect Mask"):
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Original Image")
+        st.image(image, use_container_width=True)
+        
+    if st.button("Detect Safety Gear 🚀"):
         with st.spinner("Processing image..."):
-            # تحويل الصورة إلى مصفوفة Numpy لـ OpenCV / YOLO
             img_array = np.array(image.convert("RGB"))
+            results = model.predict(source=img_array, conf=conf_threshold)
             
-            # تشغيل نموذج YOLO للتعرف على الكمامات
-            results = model(img_array)
-            
-            # رسم النتائج على الصورة
             res_plotted = results[0].plot()
+            res_image = Image.fromarray(res_plotted)
             
-            # عرض الصورة بعد الاكتشاف
-            st.image(res_plotted, caption="Detection Result", use_container_width=True)
+            with col2:
+                st.subheader("Detection Result")
+                st.image(res_image, use_container_width=True)
+                
+            st.markdown("---")
+            st.subheader("📊 Detection Summary:")
+            boxes = results[0].boxes
+            if len(boxes) > 0:
+                class_names = model.names
+                counts = {}
+                for box in boxes:
+                    cls_id = int(box.cls[0])
+                    name = class_names[cls_id]
+                    counts[name] = counts.get(name, 0) + 1
+                
+                for obj_name, count in counts.items():
+                    st.write(f"- **{obj_name}**: {count}")
+            else:
+                st.write("No objects detected above the selected confidence threshold.")
