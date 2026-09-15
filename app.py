@@ -16,7 +16,7 @@ st.write("Upload an image to detect safety helmets and unprotected heads using *
 # Load model with caching
 @st.cache_resource
 def load_model():
-    return YOLO("best (1).pt")
+    return YOLO("best.pt")
 
 try:
     model = load_model()
