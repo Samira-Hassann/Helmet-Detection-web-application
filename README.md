@@ -1,4 +1,4 @@
-# ⛑️ Helmet & Safety Gear Detection (YOLO11)
+# ⛑️ Helmet & Safety Gear Detection (YOLO11m)
 
 An end-to-end Computer Vision system that detects safety helmets and unprotected heads in real time for industrial safety environments using **YOLO11** and **Streamlit**.
 
