@@ -2,7 +2,8 @@
 
 An end-to-end Computer Vision system that detects safety helmets and unprotected heads in real time for industrial safety environments using **YOLO11** and **Streamlit**.
 
-📌 **Kaggle Notebook:** [Helmet & Safety Gear Detection (YOLO11)](https://www.kaggle.com/code/samoura/helmet-safety-gear-detection-yolo11)
+🚀 **Live Demo:** [Helmet Detection Web App](https://helmet-detection-web-application.streamlit.app/)  
+📌 **Kaggle Notebook:** [Helmet & Safety Gear Detection (YOLO11)](https://www.kaggle.com/code/samoura/mask-detection)
 
 ## 📊 Dataset Overview
 - **Source:** Roboflow Universe (`hardhat-b12dh`)
