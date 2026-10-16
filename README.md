@@ -1,9 +1,9 @@
 # ⛑️ Helmet & Safety Gear Detection (YOLO11m)
 
-An end-to-end Computer Vision system that detects safety helmets and unprotected heads in real time for industrial safety environments using **YOLO11** and **Streamlit**.
+An end-to-end Computer Vision project designed to automatically detect safety compliance in industrial environments by identifying whether workers are wearing safety helmets (`helmet`) or working with unprotected heads (`head`) using **YOLO11** and **Streamlit**.
 
 🚀 **Live Demo:** [Helmet Detection Web App](https://helmet-detection-web-application.streamlit.app/)  
-📌 **Kaggle Notebook:** [Helmet & Safety Gear Detection (YOLO11)](https://www.kaggle.com/code/samoura/mask-detection)
+📌 **Kaggle Notebook:** [Helmet & Safety Gear Detection (YOLO11)](https://www.kaggle.com/code/samoura/helmet-safety-gear-detection-yolo11)
 
 ## 📊 Dataset Overview
 - **Source:** Roboflow Universe (`hardhat-b12dh`)
@@ -18,6 +18,16 @@ An end-to-end Computer Vision system that detects safety helmets and unprotected
 - Dynamic confidence threshold adjustment.
 - Instant object summary count per image.
 
+## 🚀 Model Training & Performance
+* **Architecture:** YOLO11m (Ultralytics)
+* **Training Setup:** Fine-tuned , layer freezing, and automated hyperparameter optimization using AdamW.
+* **Test Metrics:**
+  * **Precision (mP):** ~93.7%
+  * **Recall (mR):** ~92.7%
+  * **mAP@50:** ~96.5%
+  * **mAP@50-95:** ~60.5%
+
+
 ## 📁 Repository Structure
 helmet-detection-yolo11/
 ```text
@@ -25,3 +35,7 @@ helmet-detection-yolo11/
 ├── app.py              # Main Streamlit web application
 ├── requirements.txt    # Python packages and dependencies
 └── README.md           # Project documentation
+```
+
+
+
